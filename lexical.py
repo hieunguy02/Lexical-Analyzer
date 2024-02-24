@@ -153,7 +153,7 @@ def lexer(filename):
             while not (contain_white_space or contain_operator or contain_seperator):
                 #something is wrong in this while loop that I do not fucking know why 
                 i = 0
-                for i in range(len(word)):
+                for i in range(len(content)):
                     word = content[i]
                     if word == white_space:
                         word = word[0:i-1]
