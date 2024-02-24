@@ -150,9 +150,10 @@ def lexer(filename):
     contain_seperator = False
       
     if contain_white_space == False and contain_operator == False and contain_seperator == False:
-            while not contain_white_space or contain_operator or contain_seperator:
+            while not (contain_white_space or contain_operator or contain_seperator):
+                #something is wrong in this while loop that I do not fucking know why 
                 i = 0
-                for i in range(len(content)):
+                for i in range(len(word)):
                     word = content[i]
                     if word == white_space:
                         word = word[0:i-1]
@@ -174,6 +175,7 @@ def lexer(filename):
                     contain_white_space = False
                     contain_operator = False
                     contain_seperator = False
+                    break
 
                 
                 elif separator_check(word[char]) == 1:
@@ -182,7 +184,7 @@ def lexer(filename):
                     contain_white_space = False
                     contain_operator = False
                     contain_seperator = False
-                
+                    break
                 
                 elif word[char].isalpha():
                     if keyword_check(word) == 1:
@@ -197,6 +199,7 @@ def lexer(filename):
                     contain_white_space = False
                     contain_operator = False
                     contain_seperator = False
+                    break
                     
                 elif word[char].isdigit():
                     if dfsm_int(word) == 1:
@@ -211,6 +214,7 @@ def lexer(filename):
                     contain_white_space = False
                     contain_operator = False
                     contain_seperator = False
+                    break
                     
                 
 
