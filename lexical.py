@@ -142,73 +142,77 @@ def dsfm_id(str):
 
 def lexer(filename):
   with open(filename, "r") as file:
-    content = file.readlines()
-    while content:
-      word = ""
-      white_space = ""
-      contain_white_space = False
-      contain_operator = False
-      contain_seperator = False
-      while not contain_white_space or contain_operator or contain_seperator:
-        i = 0
-        for i in range(len(content)):
-          word = content[i]
-          if word == white_space:
-            word = word[0:i-1]
-            contain_white_space = True
-          elif operator_check(word) == 1:
-            word = word[0:i-1]
-            contain_operator = True
-          elif separator_check(word) == 1:
-            word = word[0:i-1]
-            contain_seperator = True
+    content = file.read()
+    word = ""
+    white_space = ""
+    contain_white_space = False
+    contain_operator = False
+    contain_seperator = False
+      
+    if contain_white_space == False and contain_operator == False and contain_seperator == False:
+            while not contain_white_space or contain_operator or contain_seperator:
+                i = 0
+                for i in range(len(content)):
+                    word = content[i]
+                    if word == white_space:
+                        word = word[0:i-1]
+                        contain_white_space = True
+                    elif operator_check(word) == 1:
+                        word = word[0:i-1]
+                        contain_operator = True
+                    elif separator_check(word) == 1:
+                        word = word[0:i-1]
+                        contain_seperator = True
         
-      for char in word:
-        if operator_check(word[char]) == 1:
-          print(word, "                   Operator")
-          word = ""
-          contain_white_space = False
-          contain_operator = False
-          contain_seperator = False
+        
+    elif contain_white_space == True or contain_operator == True or contain_seperator == True:
+        
+            for char in word:
+                if operator_check(word[char]) == 1:
+                    print(word, "                   Operator")
+                    word = ""
+                    contain_white_space = False
+                    contain_operator = False
+                    contain_seperator = False
 
-          
-        elif separator_check(word[char]) == 1:
-          print(word, "                   Separator")
-          word = ""
-          contain_white_space = False
-          contain_operator = False
-          contain_seperator = False
-          
-        
-        elif word[char].isalpha():
-          if keyword_check(word) == 1:
-            print(word, "               Keywords")
-          else:
-            dsfm_id(word)
-            if dsfm_id == 1:
-              print(word, "                   Identifier")
-            elif dsfm_id == 0:
-              print(word, "                   Invalid")
-          word = ""
-          contain_white_space = False
-          contain_operator = False
-          contain_seperator = False
-            
-        elif word[char].isdigit():
-          if dfsm_int(word) == 1:
-            print(word, "                   Integers")
-          elif dfsm_int(word) == 0:
-            dfsm_real(word)
-            if dfsm_real(word) == 1:
-              print(word, "                 Reals")
-            elif dfsm_real(word) == 0:
-              print(word, "                   Invalid")
-          word = ""
-          contain_white_space = False
-          contain_operator = False
-          contain_seperator = False
-            
-          
+                
+                elif separator_check(word[char]) == 1:
+                    print(word, "                   Separator")
+                    word = ""
+                    contain_white_space = False
+                    contain_operator = False
+                    contain_seperator = False
+                
+                
+                elif word[char].isalpha():
+                    if keyword_check(word) == 1:
+                        print(word, "               Keywords")
+                    else:
+                        dsfm_id(word)
+                        if dsfm_id == 1:
+                            print(word, "                   Identifier")
+                        elif dsfm_id == 0:
+                            print(word, "                   Invalid")
+                    word = ""
+                    contain_white_space = False
+                    contain_operator = False
+                    contain_seperator = False
+                    
+                elif word[char].isdigit():
+                    if dfsm_int(word) == 1:
+                        print(word, "                   Integers")
+                elif dfsm_int(word) == 0:
+                    dfsm_real(word)
+                    if dfsm_real(word) == 1:
+                        print(word, "                 Reals")
+                    elif dfsm_real(word) == 0:
+                        print(word, "                   Invalid")
+                    word = ""
+                    contain_white_space = False
+                    contain_operator = False
+                    contain_seperator = False
+                    
+                
 
 find = True
 while(find):
