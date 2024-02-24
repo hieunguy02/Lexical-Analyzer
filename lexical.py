@@ -132,8 +132,7 @@ def dsfm_id(str):
     if state == 0:
       break
 
-  if state == accepting_state[0] or state == accepting_state[
-      1] or state == accepting_state[2]:
+  if state == accepting_state[0] or state == accepting_state[1] or state == accepting_state[2]:
     return 1
   else:
     return 0
@@ -141,82 +140,77 @@ def dsfm_id(str):
 
 
 def lexer(filename):
-  with open(filename, "r") as file:
-    content = file.read()
-    word = ""
-    white_space = ""
-    contain_white_space = False
-    contain_operator = False
-    contain_seperator = False
-      
-    if contain_white_space == False and contain_operator == False and contain_seperator == False:
-            while not (contain_white_space or contain_operator or contain_seperator):
-                #something is wrong in this while loop that I do not fucking know why 
-                i = 0
-                for i in range(len(content)):
-                    word = content[i]
-                    if word == white_space:
-                        word = word[0:i-1]
-                        contain_white_space = True
-                    elif operator_check(word) == 1:
-                        word = word[0:i-1]
-                        contain_operator = True
-                    elif separator_check(word) == 1:
-                        word = word[0:i-1]
-                        contain_seperator = True
+    with open(filename, "r") as file:
+        content = file.read()
+        word = ""
+        i = 0
+        in_comment = False
         
-        
-    elif contain_white_space == True or contain_operator == True or contain_seperator == True:
-        
-            for char in word:
-                if operator_check(word[char]) == 1:
-                    print(word, "                   Operator")
-                    word = ""
-                    contain_white_space = False
-                    contain_operator = False
-                    contain_seperator = False
-                    break
+        while i < (len(content) - 1):
+            char = content[i]
+            if char == "[" and not in_comment:
+                i += 1
+                if content[i] == "*":
+                    in_comment = True
+                    i += 1
+                    continue
+            if char == "*" and in_comment:
+                i += 1
+                if content[i] == "]":
+                    in_comment = False
+                    i += 1
+                    continue
+            if in_comment == True:
+                i += 1
+                continue
 
+
+            if in_comment == False:
+                if char.isspace():
+                    i += 1
+                    continue
                 
-                elif separator_check(word[char]) == 1:
-                    print(word, "                   Separator")
-                    word = ""
-                    contain_white_space = False
-                    contain_operator = False
-                    contain_seperator = False
-                    break
+                elif operator_check(char) == 1:
+                    print(char, "                   Operator")
+                    i += 1
                 
-                elif word[char].isalpha():
+                elif separator_check(char) == 1:
+                    print(char, "                   Separator")
+                    i += 1
+                
+                elif char.isalpha() or char == '':
+                    word += char
+                    i += 1
+                    while i < len(content) and (content[i].isalnum() or content[i] == '_'):
+                        word += content[i]
+                        i += 1
                     if keyword_check(word) == 1:
                         print(word, "               Keywords")
+                    elif dsfm_id(word) == 1:
+                        print(word, "                   Identifier")
                     else:
-                        dsfm_id(word)
-                        if dsfm_id == 1:
-                            print(word, "                   Identifier")
-                        elif dsfm_id == 0:
-                            print(word, "                   Invalid")
-                    word = ""
-                    contain_white_space = False
-                    contain_operator = False
-                    contain_seperator = False
-                    break
-                    
-                elif word[char].isdigit():
-                    if dfsm_int(word) == 1:
-                        print(word, "                   Integers")
-                elif dfsm_int(word) == 0:
-                    dfsm_real(word)
-                    if dfsm_real(word) == 1:
-                        print(word, "                 Reals")
-                    elif dfsm_real(word) == 0:
                         print(word, "                   Invalid")
                     word = ""
-                    contain_white_space = False
-                    contain_operator = False
-                    contain_seperator = False
-                    break
-                    
                 
+                elif char.isdigit():
+                    word += char
+                    i += 1
+                    while i < len(content) and (content[i].isdigit() or content[i] == '.'):
+                        word += content[i]
+                        i += 1
+                    if dfsm_int(word) == 1:
+                        print(word, "                   Integers")
+                    elif dfsm_real(word) == 1:
+                        print(word, "                 Reals")
+                    else:
+                        print(word, "                   Invalid")
+                    word = ""
+                else:
+                    print(char, "                   Invalid")
+                    i += 1
+            
+                        
+                    
 
 find = True
 while(find):
