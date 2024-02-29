@@ -171,8 +171,13 @@ def lexer(filename):
                     continue
                 
                 elif operator_check(char) == 1:
-                    print(char, "                   Operator")
                     i += 1
+                    if operator_check(content[i]) == 1:
+                      print(char+content[i], "                   Operator")
+                      i += 1
+                    elif operator_check(content[i]) == 0:
+                      print(char, "                   Operator")
+                      i += 1
                 
                 elif separator_check(char) == 1:
                     print(char, "                   Separator")
