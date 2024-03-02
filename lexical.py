@@ -105,7 +105,7 @@ def dfsm_real(str):
     return 0
 
 
-##Double check my work yall!
+
 def dsfm_id(str):
   '''
   DFSM to recognize identifiers
