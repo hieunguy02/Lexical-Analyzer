@@ -14,7 +14,7 @@ def separator_check(char):
 
 #Check to see if the char is a operator
 def operator_check(char):
-  operator = {'+', '-', '*', '/', '>', '<', '=', ':'}
+  operator = {'+', '-', '*', '/', '>', '<', '=', ':', '!'}
   if char in operator:
 
     return 1
@@ -24,7 +24,7 @@ def operator_check(char):
 
 #Check to see if the str is a keyword
 def keyword_check(word):
-  keywords = ['integer', 'if', 'else', 'endif', 'while', 'return', 'scan', 'print', 'for', 'elseif']
+  keywords = ['int','double', 'float', 'if', 'else', 'endif', 'while', 'return', 'scan', 'print', 'for', 'elseif', 'double', 'function', 'endwhile', 'true', 'false', 'boolean', 'reals']
   if word in keywords:
     #print ("Keyword", word)
     return 1
@@ -89,7 +89,7 @@ def dfsm_real(str):
   4   4    0      0     0      0
   '''
   state = 1
-  accepting_state = [2, 3, 4]
+  accepting_state = [4]
   table = [[0, 1, 2, 3, 4, 5], [1, 2, 0, 0, 0, 0], [2, 2, 3, 0, 0, 0],
            [3, 4, 0, 0, 0, 0], [4, 4, 0, 0, 0, 0]]
 
@@ -99,7 +99,7 @@ def dfsm_real(str):
     if state == 0:
       break
 
-  if state == accepting_state[0] or state == accepting_state[1] or state == accepting_state[2]:
+  if state == accepting_state[0]:
     return 1
   else:
     return 0
@@ -172,12 +172,12 @@ def lexer(filename):
                 
                 elif operator_check(char) == 1:
                     i += 1
-                    if operator_check(content[i]) == 1:
+                    if operator_check(content[i]) == 1 and content[i] == '=':
                       print(char+content[i], "                   Operator")
                       i += 1
-                    elif operator_check(content[i]) == 0:
+                    elif operator_check(content[i]) == 0 or content[i] != '=':
                       print(char, "                   Operator")
-                      i += 1
+                      
                 
                 elif separator_check(char) == 1:
                     print(char, "                   Separator")
