@@ -3,6 +3,8 @@
 # separator_check(), operator_check(), keyword_check()
 #Check to see if the char is a separator
 
+
+
 def separator_check(char):
   separator = {'(', ')', '{', '}', '%', '@', ',', '[', ']', ';'}
   if char in separator:
@@ -104,7 +106,7 @@ def dfsm_real(str):
   else:
     return 0
 
-
+  
 
 def dsfm_id(str):
   '''
@@ -141,7 +143,7 @@ def dsfm_id(str):
 def lexer(filename, fileoutput):
   with open(filename, "r") as file:
     with open(fileoutput, "w") as file_output:
-        file_output.write("Tokens:              Lexemes:" + "\n")
+        file_output.write("Lexemes:              Tokens:" + "\n")
         content = file.read()
         word = ""
         i = 0
@@ -174,23 +176,29 @@ def lexer(filename, fileoutput):
                 elif operator_check(char) == 1:
                     i += 1
                     if operator_check(content[i]) == 1 and content[i] == '=':
-                      token = char+content[i]
-                      lexeme = "Operator"
-                      file_output.write(token + "                   " + lexeme + "\n")
+                      lexeme = char+content[i]
+                      lexemes.append(lexeme)
+                      token = "Operator"
+                      tokens.append(tokens)
+                      file_output.write(lexeme + "                   " + token + "\n")
                       i += 1
                       token = ""
                       lexeme = ""
                     elif operator_check(content[i]) == 0 or content[i] != '=':
-                      token = char
-                      lexeme = "Operator"
-                      file_output.write(token + "                   " + lexeme + "\n")
+                      lexeme = char
+                      lexemes.append(lexeme)
+                      token = "Operator"
+                      tokens.append(token)
+                      file_output.write(lexeme + "                   " + token + "\n")
                       token = ""
                       lexeme = ""
                 
                 elif separator_check(char) == 1:
-                    token = char
-                    lexeme = "Separator"
-                    file_output.write(token + "                   " + lexeme + "\n")
+                    lexeme = char
+                    lexemes.append(lexeme)
+                    token = "Separator"
+                    tokens.append(token)
+                    file_output.write(lexeme + "                   " + token + "\n")
                     i += 1
                     token = ""
                     lexeme = ""
@@ -201,21 +209,27 @@ def lexer(filename, fileoutput):
                         word += content[i]
                         i += 1
                     if keyword_check(word) == 1:
-                        token = word
-                        lexeme = "Keyword"
-                        file_output.write(token + "                   " + lexeme + "\n")
+                        lexeme = word
+                        lexemes.append(lexeme)
+                        token = "Keyword"
+                        tokens.append(token)
+                        file_output.write(lexeme + "                   " + token + "\n")
                         token = ""
                         lexeme = ""
                     elif dsfm_id(word) == 1:
-                        token = word
-                        lexeme = "Identifier"
-                        file_output.write(token + "                   " + lexeme + "\n")
+                        lexeme = word
+                        lexemes.append(lexeme)
+                        token = "Identifier"
+                        tokens.append(token)
+                        file_output.write(lexeme + "                   " + token + "\n")
                         token = ""
                         lexeme = ""
                     else:
-                        token = word
-                        lexeme = "Invalid"
-                        file_output.write(token + "                   " + lexeme + "\n")
+                        lexeme = word
+                        lexemes.append(lexeme)
+                        token = "Invalid"
+                        tokens.append(token)
+                        file_output.write(lexeme + "                   " + token + "\n")
                         token = ""
                         lexeme = ""
                     word = ""
@@ -227,28 +241,36 @@ def lexer(filename, fileoutput):
                         word += content[i]
                         i += 1
                     if dfsm_int(word) == 1:
-                        token = word
-                        lexeme = "Integer"
-                        file_output.write(token + "                   " + lexeme + "\n")
+                        lexeme = word
+                        lexemes.append(lexeme)
+                        token = "Integer"
+                        tokens.append(tokens)
+                        file_output.write(lexeme + "                   " + token + "\n")
                         token = ""
                         lexeme = ""
                     elif dfsm_real(word) == 1:
-                        token = word
-                        lexeme = "Real"
-                        file_output.write(token + "                   " + lexeme + "\n")
+                        lexeme = word
+                        lexemes.append(lexeme)
+                        token = "Real"
+                        tokens.append(token)
+                        file_output.write(lexeme + "                   " + token + "\n")
                         token = ""
                         lexeme = ""
                     else:
-                        token = word
-                        lexeme = "Keyword"
-                        file_output.write(token + "                   " + lexeme + "\n")
+                        lexeme = word
+                        lexemes.append(lexeme)
+                        token = "Keyword"
+                        tokens.append(token)
+                        file_output.write(lexeme + "                   " + token + "\n")
                         token = ""
                         lexeme = ""
                     word = ""
                 else:
-                    token = char
-                    lexeme = "Invalid"
-                    file_output.write(token + "                   " + lexeme + "\n")
+                    lexeme = char
+                    lexemes.append(lexeme)
+                    token = "Invalid"
+                    tokens.append(token)
+                    file_output.write(lexeme + "                   " + token + "\n")
                     token = ""
                     lexeme = ""
                     i += 1
@@ -257,6 +279,8 @@ def lexer(filename, fileoutput):
                     
 token = ""
 lexeme = ""
+tokens = []
+lexemes = []
 find = True
 
 while(find):

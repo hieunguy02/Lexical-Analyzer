@@ -1,4 +1,4 @@
-Tokens:              Lexemes:
+Lexemes:              Tokens:
 int                   Keyword
 a                   Identifier
 =                   Operator
