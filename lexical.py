@@ -259,7 +259,7 @@ def lexer(filename, fileoutput):
                     else:
                         lexeme = word
                         lexemes.append(lexeme)
-                        token = "Keyword"
+                        token = "Invalid"
                         tokens.append(token)
                         file_output.write(lexeme + "                   " + token + "\n")
                         token = ""
