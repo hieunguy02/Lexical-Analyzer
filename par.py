@@ -16,19 +16,30 @@ find = True
 #create the function needed from the syntax
 #function taking a current_i
 
-def RATS24(current_i):
+def RATS24(current_i, switch):
+    if switch == "1":
+      fileoutput.write("<Rat24S> ::= $ <Opt Function Definitions> $ <Opt Declaration List> $ <Statement List> $")
+      if lexemes[current_i] == "$":
+        current_i += 1
+        OptFunctionDef(current_i, switch)
+               
+def OptFunctionDef(current_i, switch):
     pass
-        
-def OptFunctionDef(current_i):
-    pass       
-
-def StatementList(current_i):
+         
+def FunctionDef(current_i, switch):
+    pass
+      
+def Function(current_i, switch):
+    pass
+  
+def StatementList(current_i, switch):
     pass
 
-def OptDeclarationList(current_i):
+def OptDeclarationList(current_i, switch):
     pass
 
-
+def Empty(current_i, switch):
+    pass
 
 while (current_i < len(tokens)):
     pass
