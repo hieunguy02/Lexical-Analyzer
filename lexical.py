@@ -26,7 +26,7 @@ def operator_check(char):
 
 #Check to see if the str is a keyword
 def keyword_check(word):
-  keywords = ['int','double', 'float', 'if', 'else', 'endif', 'while', 'return', 'scan', 'print', 'for', 'elseif', 'double', 'function', 'endwhile', 'true', 'false', 'boolean', 'reals']
+  keywords = ['integer','double', 'float', 'if', 'else', 'endif', 'while', 'return', 'scan', 'print', 'for', 'elseif', 'double', 'function', 'endwhile', 'true', 'false', 'boolean', 'real']
   if word in keywords:
     #print ("Keyword", word)
     return 1

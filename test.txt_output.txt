@@ -5,6 +5,11 @@ $   Separator
 <Function Definitions> ::= <Function> <Function Definitions Prime>
 function   Keyword
 <Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+convertx   Identifier
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+(   Separator
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+Syntax Error, expected ) 
 <Function Definitions Prime> ::= <Epsilon>
 $   Separator
 $   Separator
