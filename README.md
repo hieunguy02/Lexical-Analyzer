@@ -79,7 +79,6 @@ R28. Primary ::= Identifier | Integer | Identifier ( IDs ) | ( Expression ) |Rea
 
 R29. Empty ::= 
 
-Note: <Identifier>, <Integer>, <Real> are token types as defined in section (1) above
 
 3) Some Semantics
  Rat24S is a conventional imperative programming language. A Rat24S program consists of a sequence of
