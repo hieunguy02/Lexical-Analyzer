@@ -1,6 +1,6 @@
 from lexical import lexer, file_name, fileoutput, tokens, lexemes
-#Finish 1 2 3 4 8 13 21 24 27 28 29
-#Unfinish 5 6 7 9 10 11 12 14 15 16 17 18 19 20 22 23 25 26 
+#Finish 1 2 3 4 8 13 21 24 25 26 27 28 29
+#Unfinish 5 6 7 9 10 11 12 14 15 16 17 18 19 20 22 23  
 
 def RATS24(current_i, switch):
     fileoutput.write("Lexemes:    Tokens:\n")
@@ -165,12 +165,73 @@ def Scan(current_i, switch):
     return current_i
 
 def Expression(current_i, switch):
+    if switch == "1":
+        fileoutput.write("<Expression> ::= <Term> <Expression>")
+    current_i = Term(current_i, switch)
+    current_i = ExpressionPrime(current_i, switch)    
     return current_i
 
-def ExpressionPrime(current_i, swtich):
+
+def ExpressionPrime(current_i, switch):
+    if lexemes[current_i] == "+":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<Expression Prime> ::= + <Term> <Expression Prime> \n")
+        current_i = Term(current_i, switch)
+        current_i = ExpressionPrime(current_i, switch)      
+            
+    elif lexemes[current_i] == "-":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<Expression Prime> ::= - <Term> <Expression Prime> \n")
+        current_i = Term(current_i, switch)
+        current_i = ExpressionPrime(current_i, switch)   
+            
+    else:
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Term Prime> ::= <Epsilon> \n")   
+        Empty() 
+            
     return current_i
+
 
 def Term(current_i, switch):
+    if switch == "1":
+        fileoutput.write("<Term> ::= <Term> <TermPrime>")
+    current_i = Factor(current_i, switch)
+    current_i = TermPrime(current_i, switch)    
+    return current_i
+
+def TermPrime(current_i, switch):
+     
+    if lexemes[current_i] == "*":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<Term Prime> ::= * <Factor> <Term Prime> \n")
+        current_i = Factor(current_i, switch)
+        current_i = TermPrime(current_i, switch)      
+            
+    elif lexemes[current_i] == "/":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<Term Prime> ::= / <Factor> <Term Prime> \n")
+        current_i = Factor(current_i, switch)
+        current_i = TermPrime(current_i, switch)  
+            
+    else:
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Term Prime> ::= <Epsilon> \n")   
+        Empty() 
+            
+    return current_i
+
+def Factor(current_i, switch):
     if lexemes[current_i] == "-":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
@@ -233,8 +294,6 @@ def Primary(current_i, switch):
     else: fileoutput.write("Syntax error, expected Identifier or Integer or (Expression) or Real or true or false")   
     
     return current_i
-
-
 
 
 def Reloop(current_i, switch):
