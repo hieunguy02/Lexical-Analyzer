@@ -23,7 +23,7 @@ Comments are enclosed in [* *] and should be entirely ignored by the LA, SA etc.
 2) Syntax rules : The following BNF describes the Rat24S.
 R1. <Rat24S> ::= $ <OptFunctionDefinitions> $ <OptDeclarationList> $ <StatementList> $
 
-R2. <OptFunctionDefinitions> ::= <FunctionDefinitions> | <Empty>
+R2. OptFunctionDefinitions ::= FunctionDefinitions | Empty
 
 R3. <FunctionDefinitions> ::= <Function> | <Function> <FunctionDefinitions>
 
