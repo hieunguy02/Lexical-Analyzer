@@ -1,0 +1,11 @@
+Lexemes:    Tokens:
+$   Separator
+<Rat24S> ::= $ <Opt Function Definitions> $ <Opt Declaration List> $ <Statement List> $
+<Opt Function Definitions> ::= <Function Definitions>
+<Function Definitions> ::= <Function> <Function Definitions Prime>
+function   Keyword
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+<Function Definitions Prime> ::= <Epsilon>
+$   Separator
+$   Separator
+$   Separator

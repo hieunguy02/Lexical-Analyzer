@@ -6,7 +6,7 @@
 
 
 def separator_check(char):
-  separator = {'(', ')', '{', '}', '%', '@', ',', '[', ']', ';'}
+  separator = {'(', ')', '{', '}', '%', '@', ',', '[', ']', ';', '$'}
   if char in separator:
 
     return 1
@@ -142,8 +142,6 @@ def dsfm_id(str):
 
 def lexer(filename):
   with open(filename, "r") as file:
-    
-        
         content = file.read()
         word = ""
         i = 0
@@ -277,11 +275,10 @@ while(find):
   try:
     file_name = input('Enter the filename: ')
     lexer(file_name)
+    print(lexemes)
     file_output = file_name + "_output.txt"
     fileoutput = open(file_output, "w")
-    fileoutput.write("Lexemes:           Tokens:" + "\n")
-    for i in range(len(tokens)):     
-      fileoutput.write(str(lexemes[i]) + "            " + str(tokens[i]) + "\n")
     find = False
+    
   except OSError:
      print("Can not find the file.")

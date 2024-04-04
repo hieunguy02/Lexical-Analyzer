@@ -1,5 +1,2 @@
 [*  This is a comment *]
-int a = 1
-int b = 2
-int c = 4
-result = a + b + c
+$ function $ $ 
