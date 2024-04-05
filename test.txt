@@ -2,8 +2,20 @@
 $ 
 function convertx (integer fahr )  
 { 
-
+    return 5 * (fahr -32) / 9 
 }  
 $ 
+integer low, high, step;  [* declarations *] 
 $ 
+
+while ( a < b )
+ { 
+    scan (low, high, step); 
+    print( convertx(low) )
+    c = a + true 
+ } 
+endwhile 
+
+scan (low, high, step);
+
 $ 

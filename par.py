@@ -1,7 +1,7 @@
 from lexical import lexer, file_name, fileoutput, tokens, lexemes
-#Finish 1 2 3 4 5 6 7 8 9 10 12 13 16 19 20 21 24 25 26 27 28 29
-#Unfinish 11 14 15 17 18 22 23  
+#Finish 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29
 
+#R1 
 def RATS24(current_i, switch):
     fileoutput.write("Lexemes:    Tokens:\n")
     if current_i is not None and lexemes[current_i] == "$":
@@ -32,6 +32,7 @@ def RATS24(current_i, switch):
             fileoutput.write("Syntax Error, expected a $\n")
     return current_i
 
+#R2
 def OptFunctionDef(current_i, switch):
     if lexemes[current_i] == "function":
         if switch == "1":
@@ -157,10 +158,15 @@ def DeclarationList(current_i, switch):
     if switch == "1":
         fileoutput.write("<DeclarationList> ::= <Declaration> <DeclarationListPrime>\n")
     current_i = Declaration(current_i, switch)
+    
     current_i = DeclarationListPrime(current_i, switch)
+    
     return current_i
 
 def DeclarationListPrime(current_i, switch):
+    if lexemes[current_i] == ";":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
     if lexemes[current_i] == "integer":
         current_i = DeclarationList(current_i, switch)
         if switch == "1":
@@ -188,6 +194,139 @@ def Declaration(current_i, switch):
     return current_i
 
 def StatementList(current_i, switch):
+    if lexemes[current_i] == "{":
+        if switch == "1":
+            fileoutput.write("<Statement List> ::= <Statement><StatementListPrime> \n")
+        current_i = Statement(current_i, switch)
+        current_i = StatementListPrime(current_i, switch)
+    
+    elif tokens[current_i] == "Identifier":
+        if switch == "1":
+            fileoutput.write("<Statement List> ::= <Statement><StatementListPrime> \n")
+        current_i = Statement(current_i, switch)
+        current_i = StatementListPrime(current_i, switch)
+        
+    elif lexemes[current_i] == "if":
+        if switch == "1":
+            fileoutput.write("<Statement List> ::= <Statement><StatementListPrime> \n")
+        current_i = Statement(current_i, switch)
+        current_i = StatementListPrime(current_i, switch)  
+        
+    elif lexemes[current_i] == "return":
+        if switch == "1":
+            fileoutput.write("<Statement List> ::= <Statement><StatementListPrime> \n")
+        current_i = Statement(current_i, switch)
+        current_i = StatementListPrime(current_i, switch)   
+        
+    elif lexemes[current_i] == "print":
+        if switch == "1":
+            fileoutput.write("<Statement List> ::= <Statement><StatementListPrime> \n")
+        current_i = Statement(current_i, switch)
+        current_i = StatementListPrime(current_i, switch)
+        
+    elif lexemes[current_i] == "scan":
+        if switch == "1":
+            fileoutput.write("<Statement List> ::= <Statement><StatementListPrime> \n")
+        current_i = Statement(current_i, switch)
+        current_i = StatementListPrime(current_i, switch)               
+
+    elif lexemes[current_i] == "while":
+        if switch == "1":
+            fileoutput.write("<Statement List> ::= <Statement><StatementListPrime> \n")
+        current_i = Statement(current_i, switch)
+        current_i = StatementListPrime(current_i, switch)  
+    return current_i
+
+def StatementListPrime(current_i, switch):
+    if lexemes[current_i] == "{":
+        if switch == "1":
+            fileoutput.write("<Statement List Prime> ::= <Statement List> \n")
+        current_i = StatementList(current_i, switch)
+    
+    elif tokens[current_i] == "Identifier":
+        if switch == "1":
+            fileoutput.write("<Statement List Prime> ::= <Statement List> \n")
+        current_i = StatementList(current_i, switch)
+        
+    elif lexemes[current_i] == "if":
+        if switch == "1":
+            fileoutput.write("<Statement List Prime> ::= <Statement List> \n")
+        current_i = StatementList(current_i, switch) 
+        
+    elif lexemes[current_i] == "return":
+        if switch == "1":
+            fileoutput.write("<Statement List Prime> ::= <Statement List> \n")
+        current_i = StatementList(current_i, switch)   
+        
+    elif lexemes[current_i] == "print":
+        if switch == "1":
+            fileoutput.write("<Statement List Prime> ::= <Statement List> \n")
+        current_i = StatementList(current_i, switch) 
+        
+    elif lexemes[current_i] == "scan":
+        if switch == "1":
+            fileoutput.write("<Statement List Prime> ::= <Statement List> \n")
+        current_i = StatementList(current_i, switch)               
+
+    elif lexemes[current_i] == "while":
+        if switch == "1":
+            fileoutput.write("<Statement List Prime> ::= <Statement List> \n")
+        current_i = StatementList(current_i, switch) 
+        
+    else:
+        if switch == "1":
+            fileoutput.write("<Statement List> ::= Epsilon \n") 
+        Empty()
+         
+    return current_i
+
+def Statement(current_i, switch):
+    if lexemes[current_i] == "{":
+        
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Statement> ::= <Compound> \n")
+        current_i = Compound(current_i, switch)
+        
+    elif tokens[current_i] == "Identifier":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Statement> ::= <Assign> \n")
+        current_i = Assign(current_i, switch)
+        
+    elif lexemes[current_i] == "if":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Statement> ::= <If> \n")
+        current_i = If(current_i, switch)    
+        
+    elif lexemes[current_i] == "return":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Statement> ::= <Return> \n")
+        current_i = Return(current_i, switch)     
+        
+    elif lexemes[current_i] == "print":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Statement> ::= <Print> \n")
+        current_i = Print(current_i, switch)
+        
+    elif lexemes[current_i] == "scan":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Statement> ::= <Scan> \n")
+        current_i = Scan(current_i, switch)                
+
+    elif lexemes[current_i] == "while":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        if switch == "1":
+            fileoutput.write("<Statement> ::= <while> \n")
+        current_i = While(current_i, switch)     
+    
+    else:
+        fileoutput.write("Syntax error, expected compound or assign or if or return or print or scan or while \n")    
+
     return current_i
 
 def Body(current_i, switch):
@@ -195,7 +334,7 @@ def Body(current_i, switch):
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Body> ::= { < Statement List> }")
+            fileoutput.write("<Body> ::= { < Statement List> } \n")
             
         current_i = StatementList(current_i, switch)    
         
@@ -203,7 +342,7 @@ def Body(current_i, switch):
             fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
             current_i += 1
             if switch == "1":
-                fileoutput.write("<Body> ::= { < Statement List> }")
+                fileoutput.write("<Body> ::= { < Statement List> } \n")
         else:fileoutput.write("Syntax error, expected } \n")        
     else:fileoutput.write("Syntax error, expected { \n")              
     return current_i
@@ -213,7 +352,7 @@ def Compound(current_i, switch):
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Compound> ::= { <Statement List> }")
+            fileoutput.write("<Compound> ::= { <Statement List> } \n")
             
         current_i = StatementList(current_i, switch)    
         
@@ -221,11 +360,123 @@ def Compound(current_i, switch):
             fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
             current_i += 1
             if switch == "1":
-                fileoutput.write("<Compound> ::= { <Statement List> }")
+                fileoutput.write("<Compound> ::= { <Statement List> } \n")
                 
     return current_i
 
-def Statement(current_i, switch):
+def Assign(current_i, switch):
+    if tokens[current_i] == "Identifier":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write(" <Assign> ::= <Identifier> = <Expression> ; \n")
+        
+        if lexemes[current_i] == "=":
+            fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+            current_i += 1
+            if switch == "1":
+                fileoutput.write(" <Assign> ::= <Identifier> = <Expression> ;\n")
+                
+            current_i = Expression(current_i, switch)
+            
+            if lexemes[current_i] == ";":
+                fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+                current_i += 1
+                if switch == "1":
+                    fileoutput.write(" <Assign> ::= <Identifier> = <Expression> ;\n")
+            else: fileoutput.write("Syntax error, expected ; \n")
+        else: fileoutput.write("Syntax error, expected = \n")
+              
+    return current_i
+
+def If(current_i, switch):
+    if lexemes[current_i] == "if":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<If> ::= <If><IfPrime> \n")
+        
+        if lexemes[current_i] == "(":
+            fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+            current_i += 1
+            if switch == "1":
+                fileoutput.write("<If> ::= <If><IfPrime> \n" )
+                
+            current_i = Condition(current_i, switch)    
+                
+            if lexemes[current_i] == ")":
+                fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+                current_i += 1
+                if switch == "1":
+                    fileoutput.write("<If> ::= <If><IfPrime> \n")   
+                    
+                current_i = Statement(current_i, switch) 
+                current_i = IfPrime(current_i, switch)
+    
+    return current_i
+
+def IfPrime(current_i, switch):
+    if lexemes[current_i] == "endif":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<If> ::= if ( <Condition> ) <Statement> endif \n")
+    
+    elif lexemes[current_i] == "else":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<If> ::= if ( <Condition> ) <Statement> else <Statement> endif \n")
+        
+        current_i = Statement(current_i, switch)
+        
+        if lexemes[current_i] == "endif":
+            fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+            current_i += 1
+            if switch == "1":
+                fileoutput.write("<If> ::= if ( <Condition> ) <Statement> else <Statement> endif \n")
+        else: fileoutput.write("Syntax error, expected endif \n")
+    else: fileoutput.write("Syntax error, expected endif or else \n")
+
+    return current_i
+
+def While(current_i, switch):
+    if lexemes[current_i] == "while":
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<While> ::= while ( <Condition> ) <Statement> endwhile \n")
+         
+        if lexemes[current_i] == "(":
+            fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+            current_i += 1
+            if switch == "1":
+                fileoutput.write("<While> ::= while ( <Condition> ) <Statement> endwhile \n")
+                
+            current_i = Condition(current_i, switch)
+            
+            if lexemes[current_i] == ")":
+                fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+                current_i += 1
+                if switch == "1":
+                    fileoutput.write("<While> ::= while ( <Condition> ) <Statement> endwhile \n")
+                
+                current_i = Statement(current_i, switch)
+                
+                if lexemes[current_i] == "endwhile":
+                    fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+                    current_i += 1
+                    if switch == "1":
+                        fileoutput.write("<While> ::= while ( <Condition> ) <Statement> endwhile \n")
+                else: fileoutput.write("Syntax error, expected endwhile \n")
+            else:  fileoutput.write("Syntax error, expected ) \n") 
+        else: fileoutput.write("Syntax error, expected ( \n")      
+    return current_i
+
+def Condition(current_i, switch):
+    current_i = Expression(current_i, switch)
+    current_i = Reloop(current_i, switch)
+    current_i = Expression(current_i, switch)
     return current_i
 
 def IDs(current_i, switch):
@@ -238,7 +489,8 @@ def IDs(current_i, switch):
     return current_i
 
 def IDSPrime(current_i, switch):
-    if tokens[current_i] == "Identifier":
+    if lexemes[current_i] == ",":
+        current_i += 1
         if switch == "1":
             fileoutput.write("<IDsPrime> ::= <IDs>\n")
         current_i = IDs(current_i, switch)
@@ -272,26 +524,26 @@ def Scan(current_i, switch):
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write(" <Scan> ::= scan ( <IDs> );")
+            fileoutput.write(" <Scan> ::= scan ( <IDs> ); \n")
         if lexemes[current_i] == "(":
             fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
             current_i += 1   
             if switch == "1":
-                fileoutput.write(" <Scan> ::= scan ( <IDs> );")
+                fileoutput.write(" <Scan> ::= scan ( <IDs> ); \n")
             current_i = IDs(current_i, switch)
             if lexemes[current_i] == ")":
                 fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
                 current_i += 1   
                 if switch == "1":
-                    fileoutput.write("<Scan> ::= scan ( <IDs> );")
+                    fileoutput.write("<Scan> ::= scan ( <IDs> ); \n")
                 if lexemes[current_i] == ";":
                     fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
                     current_i += 1   
                     if switch == "1":
-                        fileoutput.write("<Scan> ::= scan ( <IDs> );")
-                else: fileoutput.write("Syntax error, expected a ;")    
-            else: fileoutput.write("Syntax error, expected a )")     
-        else: fileoutput.write("Syntax error, expected a (")     
+                        fileoutput.write("<Scan> ::= scan ( <IDs> ); \n")
+                else: fileoutput.write("Syntax error, expected a ; \n")    
+            else: fileoutput.write("Syntax error, expected a ) \n")     
+        else: fileoutput.write("Syntax error, expected a ( \n")     
     return current_i
 
 def Return(current_i, switch):
@@ -363,7 +615,7 @@ def Print(current_i, switch):
 
 def Expression(current_i, switch):
     if switch == "1":
-        fileoutput.write("<Expression> ::= <Term> <Expression>")
+        fileoutput.write("<Expression> ::= <Term> <Expression> \n")
     current_i = Term(current_i, switch)
     current_i = ExpressionPrime(current_i, switch)    
     return current_i
@@ -395,7 +647,7 @@ def ExpressionPrime(current_i, switch):
 
 def Term(current_i, switch):
     if switch == "1":
-        fileoutput.write("<Term> ::= <Term> <TermPrime>")
+        fileoutput.write("<Term> ::= <Term> <TermPrime> \n")
     current_i = Factor(current_i, switch)
     current_i = TermPrime(current_i, switch)    
     return current_i
@@ -431,44 +683,59 @@ def Factor(current_i, switch):
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write(" - <Primary>\n")
+            fileoutput.write("<Factor> ::= - <Primary>\n")
         current_i = Primary(current_i, switch)
     else:    
         current_i = Primary(current_i, switch)
         if switch == "1":
-            fileoutput.write(" <Primary>\n")
+            fileoutput.write("<Factor> ::= <Primary>\n")
     return current_i
 
 def Primary(current_i, switch):
     if tokens[current_i] == "Identifier":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
-        current_i = IDs(current_i, switch)
+        current_i += 1
         if switch == "1":
-            fileoutput.write("<Primary> ::= <Identifier>; \n")
+            fileoutput.write("<Primary> ::= <Identifier> \n")
+        if lexemes[current_i] == "(":
+            fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+            current_i += 1
+            if switch == "1":
+                fileoutput.write("<Primary> ::= <Identifier> (<IDs>) \n")
+                
+            current_i = IDs(current_i, switch)
             
+            if lexemes[current_i] == ")":
+                fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+                current_i += 1 
+                if switch == "1":
+                    fileoutput.write("<Primary> ::= <Identifier> (<IDs>) \n")
+            else: fileoutput.write("Syntax error, expected a )")
+
+                      
     elif tokens[current_i] == "Integer":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Primary> ::= <Integer>; \n")
+            fileoutput.write("<Primary> ::= <Integer> \n")
             
     elif tokens[current_i] == "Real":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Primary> ::= <Real>; \n")
+            fileoutput.write("<Primary> ::= <Real> \n")
             
     elif lexemes[current_i] == "true":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Primary> ::= <true>; \n")        
+            fileoutput.write("<Primary> ::= <true> \n")        
         
     elif lexemes[current_i] == "(":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Primary> ::=  (<Expression>); \n") 
+            fileoutput.write("<Primary> ::=  (<Expression>) \n") 
             
         current_i = Expression(current_i, switch)
         
@@ -476,17 +743,17 @@ def Primary(current_i, switch):
             fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
             current_i += 1
             if switch == "1":
-                fileoutput.write("<Primary> ::= (<Expression>); \n") 
-        else: fileoutput.write("Syntax error, expected a ); \n")           
+                fileoutput.write("<Primary> ::= (<Expression>) \n") 
+        else: fileoutput.write("Syntax error, expected a ) \n")           
         
     
     elif lexemes[current_i] == "false":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Primary> ::= <false>; \n")  
+            fileoutput.write("<Primary> ::= <false> \n")  
             
-    else: fileoutput.write("Syntax error, expected Identifier or Integer or (Expression) or Real or true or false")   
+    else: fileoutput.write("Syntax error, expected Identifier or Integer or (Expression) or Real or true or false \n")   
     
     return current_i
 
@@ -511,7 +778,6 @@ def ParCheck(current_i, switch):
 try:
     lexer(file_name)
     switch = input("Enter 0 (Turn off syntax) or 1 (Turn on syntax): ")
-    print(lexemes)
     current_i = ParCheck(0, switch)
 
 
