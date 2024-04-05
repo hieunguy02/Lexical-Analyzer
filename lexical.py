@@ -275,7 +275,6 @@ while(find):
   try:
     file_name = input('Enter the filename: ')
     lexer(file_name)
-    print(lexemes)
     file_output = file_name + "_output.txt"
     fileoutput = open(file_output, "w")
     find = False

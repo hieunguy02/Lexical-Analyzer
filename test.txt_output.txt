@@ -9,8 +9,23 @@ convertx   Identifier
 <Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
 (   Separator
 <Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
-Syntax Error, expected ) 
+<DeclarationList> ::= <Declaration> <DeclarationListPrime>
+integer   Keyword
+<Parameter> ::= <Qualifier> <IDs> 
+integer   Keyword
+<Qualifier> ::= integer | boolean | real 
+fahr   Identifier
+<IDs> ::= <Identifier> <IDsPrime>
+<IDsPrime> ::= <Epsilon>
+<Opt Declaration List Prime> ::= <Epsilon>
+<Opt Declaration List> ::= <Declaration List>
+)   Separator
+<Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+<Opt Declaration List> ::= <Epsilon>
+{   Separator
+<Body> ::= { < Statement List> }Syntax error, expected } 
 <Function Definitions Prime> ::= <Epsilon>
 $   Separator
+<Opt Declaration List> ::= <Epsilon>
 $   Separator
 $   Separator
