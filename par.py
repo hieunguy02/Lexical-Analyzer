@@ -1,6 +1,6 @@
 from lexical import lexer, file_name, fileoutput, tokens, lexemes
-#Finish 1 2 3 4 8 13 21 24 25 26 27 28 29
-#Unfinish 5 6 7 9 10 11 12 14 15 16 17 18 19 20 22 23  
+#Finish 1 2 3 4 5 6 7 8 9 10 12 13 16 19 20 21 24 25 26 27 28 29
+#Unfinish 11 14 15 17 18 22 23  
 
 def RATS24(current_i, switch):
     fileoutput.write("Lexemes:    Tokens:\n")
@@ -129,7 +129,7 @@ def ParaListPrime(current_i, switch):
 def Paramater(current_i, switch):
     fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
     if switch == "1":
-        fileoutput.write("<Parameter> ::= <IDs > <Qualifier> \n")
+        fileoutput.write("<Parameter> ::= <IDs> <Qualifier> \n")
     current_i = IDs(current_i, switch)
     current_i = Qualifier(current_i, switch)
     return current_i
@@ -188,7 +188,6 @@ def Declaration(current_i, switch):
     return current_i
 
 def StatementList(current_i, switch):
-    current_i += 1
     return current_i
 
 def Body(current_i, switch):
@@ -254,17 +253,17 @@ def Qualifier(current_i, switch):
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Qualifier> ::= integer | boolean | real \n")
+            fileoutput.write("<Qualifier> ::= integer \n")
     elif lexemes[current_i] == "boolean":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Qualifier> ::= integer | boolean | real \n")
+            fileoutput.write("<Qualifier> ::= boolean \n")
     elif lexemes[current_i] == "real":
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write("<Qualifier> ::= integer | boolean | real \n")
+            fileoutput.write("<Qualifier> ::= real \n")
     else: fileoutput.write("Syntax error, expected a qualifier integer, boolean or real \n")     
     return current_i
 
@@ -340,26 +339,26 @@ def Print(current_i, switch):
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
-            fileoutput.write(" <Print> ::= print ( <Expression>);")
+            fileoutput.write(" <Print> ::= print ( <Expression>); \n")
         if lexemes[current_i] == "(":
             fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
             current_i += 1   
             if switch == "1":
-                fileoutput.write(" <Print> ::= print ( <Expression>);")
+                fileoutput.write(" <Print> ::= print ( <Expression>); \n")
             current_i = Expression(current_i, switch)
             if lexemes[current_i] == ")":
                 fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
                 current_i += 1   
                 if switch == "1":
-                    fileoutput.write(" <Print> ::= print ( <Expression>);")
+                    fileoutput.write(" <Print> ::= print ( <Expression>); \n")
                 if lexemes[current_i] == ";":
                     fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
                     current_i += 1   
                     if switch == "1":
-                        fileoutput.write(" <Print> ::= print ( <Expression>);")
-                else: fileoutput.write("Syntax error, expected a ;")    
-            else: fileoutput.write("Syntax error, expected a )")     
-        else: fileoutput.write("Syntax error, expected a (")     
+                        fileoutput.write(" <Print> ::= print ( <Expression>); \n")
+                else: fileoutput.write("Syntax error, expected a ; \n")    
+            else: fileoutput.write("Syntax error, expected a ) \n")     
+        else: fileoutput.write("Syntax error, expected a ( \n")     
     return current_i
 
 def Expression(current_i, switch):
