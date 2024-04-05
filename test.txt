@@ -11,8 +11,8 @@ $
 while ( a < b )
  { 
     scan (low, high, step); 
-    print( convertx(low) )
-    c = a + true 
+    print( convertx(low) );
+    c = a + true ;
  } 
 endwhile 
 

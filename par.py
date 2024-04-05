@@ -282,44 +282,36 @@ def StatementListPrime(current_i, switch):
 
 def Statement(current_i, switch):
     if lexemes[current_i] == "{":
-        
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Statement> ::= <Compound> \n")
         current_i = Compound(current_i, switch)
         
     elif tokens[current_i] == "Identifier":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Statement> ::= <Assign> \n")
         current_i = Assign(current_i, switch)
         
     elif lexemes[current_i] == "if":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Statement> ::= <If> \n")
         current_i = If(current_i, switch)    
         
     elif lexemes[current_i] == "return":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Statement> ::= <Return> \n")
         current_i = Return(current_i, switch)     
         
     elif lexemes[current_i] == "print":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Statement> ::= <Print> \n")
         current_i = Print(current_i, switch)
         
     elif lexemes[current_i] == "scan":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Statement> ::= <Scan> \n")
         current_i = Scan(current_i, switch)                
 
     elif lexemes[current_i] == "while":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Statement> ::= <while> \n")
         current_i = While(current_i, switch)     
@@ -502,17 +494,14 @@ def IDSPrime(current_i, switch):
 
 def Qualifier(current_i, switch):
     if lexemes[current_i] == "integer":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
             fileoutput.write("<Qualifier> ::= integer \n")
     elif lexemes[current_i] == "boolean":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
             fileoutput.write("<Qualifier> ::= boolean \n")
     elif lexemes[current_i] == "real":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
             fileoutput.write("<Qualifier> ::= real \n")
@@ -671,7 +660,6 @@ def TermPrime(current_i, switch):
         current_i = TermPrime(current_i, switch)  
             
     else:
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Term Prime> ::= <Epsilon> \n")   
         Empty() 
@@ -740,7 +728,6 @@ def Primary(current_i, switch):
         current_i = Expression(current_i, switch)
         
         if lexemes[current_i] == ")":
-            fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
             current_i += 1
             if switch == "1":
                 fileoutput.write("<Primary> ::= (<Expression>) \n") 

@@ -12,7 +12,6 @@ convertx   Identifier
 <DeclarationList> ::= <Declaration> <DeclarationListPrime>
 integer   Keyword
 <Parameter> ::= <Qualifier> <IDs> 
-integer   Keyword
 <Qualifier> ::= integer 
 fahr   Identifier
 <IDs> ::= <Identifier> <IDsPrime>
@@ -25,7 +24,6 @@ fahr   Identifier
 {   Separator
 <Body> ::= { < Statement List> } 
 <Statement List> ::= <Statement><StatementListPrime> 
-return   Keyword
 <Statement> ::= <Return> 
 return   Keyword
 <return> ::= <return> <returnPrime>
@@ -44,7 +42,6 @@ return   Keyword
 fahr   Identifier
 <Primary> ::= <Identifier> 
 <Factor> ::= <Primary>
--   Operator
 <Term Prime> ::= <Epsilon> 
 -   Operator
 <Expression Prime> ::= - <Term> <Expression Prime> 
@@ -52,11 +49,9 @@ fahr   Identifier
 32   Integer
 <Primary> ::= <Integer> 
 <Factor> ::= <Primary>
-)   Separator
 <Term Prime> ::= <Epsilon> 
 )   Separator
 <Term Prime> ::= <Epsilon> 
-)   Separator
 <Primary> ::= (<Expression>) 
 <Factor> ::= <Primary>
 /   Operator
@@ -64,7 +59,6 @@ fahr   Identifier
 9   Integer
 <Primary> ::= <Integer> 
 <Factor> ::= <Primary>
-}   Separator
 <Term Prime> ::= <Epsilon> 
 }   Separator
 <Term Prime> ::= <Epsilon> 
@@ -76,7 +70,6 @@ $   Separator
 <DeclarationList> ::= <Declaration> <DeclarationListPrime>
 integer   Keyword
 <Parameter> ::= <Qualifier> <IDs> 
-integer   Keyword
 <Qualifier> ::= integer 
 low   Identifier
 <IDs> ::= <Identifier> <IDsPrime>
@@ -92,7 +85,6 @@ step   Identifier
 <Opt Declaration List> ::= <Declaration List>
 $   Separator
 <Statement List> ::= <Statement><StatementListPrime> 
-while   Keyword
 <Statement> ::= <while> 
 while   Keyword
 <While> ::= while ( <Condition> ) <Statement> endwhile 
@@ -103,7 +95,6 @@ while   Keyword
 a   Identifier
 <Primary> ::= <Identifier> 
 <Factor> ::= <Primary>
-<   Operator
 <Term Prime> ::= <Epsilon> 
 <   Operator
 <Term Prime> ::= <Epsilon> 
@@ -114,18 +105,15 @@ a   Identifier
 b   Identifier
 <Primary> ::= <Identifier> 
 <Factor> ::= <Primary>
-)   Separator
 <Term Prime> ::= <Epsilon> 
 )   Separator
 <Term Prime> ::= <Epsilon> 
 )   Separator
 <While> ::= while ( <Condition> ) <Statement> endwhile 
-{   Separator
 <Statement> ::= <Compound> 
 {   Separator
 <Compound> ::= { <Statement List> } 
 <Statement List> ::= <Statement><StatementListPrime> 
-scan   Keyword
 <Statement> ::= <Scan> 
 scan   Keyword
  <Scan> ::= scan ( <IDs> ); 
@@ -146,7 +134,6 @@ step   Identifier
 <Scan> ::= scan ( <IDs> ); 
 <Statement List Prime> ::= <Statement List> 
 <Statement List> ::= <Statement><StatementListPrime> 
-print   Keyword
 <Statement> ::= <Print> 
 print   Keyword
  <Print> ::= print ( <Expression>); 
@@ -164,16 +151,15 @@ low   Identifier
 )   Separator
 <Primary> ::= <Identifier> (<IDs>) 
 <Factor> ::= <Primary>
-)   Separator
 <Term Prime> ::= <Epsilon> 
 )   Separator
 <Term Prime> ::= <Epsilon> 
 )   Separator
  <Print> ::= print ( <Expression>); 
-Syntax error, expected a ; 
+;   Separator
+ <Print> ::= print ( <Expression>); 
 <Statement List Prime> ::= <Statement List> 
 <Statement List> ::= <Statement><StatementListPrime> 
-c   Identifier
 <Statement> ::= <Assign> 
 c   Identifier
  <Assign> ::= <Identifier> = <Expression> ; 
@@ -184,7 +170,6 @@ c   Identifier
 a   Identifier
 <Primary> ::= <Identifier> 
 <Factor> ::= <Primary>
-+   Operator
 <Term Prime> ::= <Epsilon> 
 +   Operator
 <Expression Prime> ::= + <Term> <Expression Prime> 
@@ -192,11 +177,11 @@ a   Identifier
 true   Keyword
 <Primary> ::= <true> 
 <Factor> ::= <Primary>
-}   Separator
 <Term Prime> ::= <Epsilon> 
-}   Separator
+;   Separator
 <Term Prime> ::= <Epsilon> 
-Syntax error, expected ; 
+;   Separator
+ <Assign> ::= <Identifier> = <Expression> ;
 <Statement List> ::= Epsilon 
 }   Separator
 <Compound> ::= { <Statement List> } 
@@ -204,7 +189,6 @@ endwhile   Keyword
 <While> ::= while ( <Condition> ) <Statement> endwhile 
 <Statement List Prime> ::= <Statement List> 
 <Statement List> ::= <Statement><StatementListPrime> 
-scan   Keyword
 <Statement> ::= <Scan> 
 scan   Keyword
  <Scan> ::= scan ( <IDs> ); 
