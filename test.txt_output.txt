@@ -27,7 +27,7 @@ fahr   Identifier
 <Statement> ::= <Return> 
 return   Keyword
 <return> ::= <return> <returnPrime>
-<returnPrime> ::= <Expression>
+<returnPrime> ::= <Expression>;
 <Expression> ::= <Term> <Expression> 
 <Term> ::= <Term> <TermPrime> 
 5   Integer
@@ -60,8 +60,9 @@ fahr   Identifier
 <Primary> ::= <Integer> 
 <Factor> ::= <Primary>
 <Term Prime> ::= <Epsilon> 
-}   Separator
+;   Separator
 <Term Prime> ::= <Epsilon> 
+<returnPrime> ::= <Expression>;
 <Statement List> ::= Epsilon 
 }   Separator
 <Body> ::= { < Statement List> } 

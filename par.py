@@ -549,32 +549,67 @@ def Return(current_i, switch):
 def ReturnPrime(current_i, switch):
     if tokens[current_i] == "Identifier":
         if switch == "1":
-            fileoutput.write("<returnPrime> ::= <Expression>\n")
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
         current_i = Expression(current_i, switch)
+        if lexemes[current_i] == ";":
+            current_i += 1
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+        else:
+            fileoutput.write("Syntax error, expected a ; \n")
     elif tokens[current_i] == "Integer":
         if switch == "1":
-            fileoutput.write("<returnPrime> ::= <Expression>\n")
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
         current_i = Expression(current_i, switch) 
+        if lexemes[current_i] == ";":
+            current_i += 1
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+        else:
+            fileoutput.write("Syntax error, expected a ; \n")
     elif tokens[current_i] == "Real":
         if switch == "1":
-            fileoutput.write("<returnPrime> ::= <Expression>\n")
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
         current_i = Expression(current_i, switch)
+        if lexemes[current_i] == ";":
+            current_i += 1
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+        else:
+            fileoutput.write("Syntax error, expected a ; \n")
     elif lexemes[current_i] == "(":
         if switch == "1":
-            fileoutput.write("<returnPrime> ::= <Expression>\n")
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
         current_i = Expression(current_i, switch)
+        if lexemes[current_i] == ";":
+            current_i += 1
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+        else:
+            fileoutput.write("Syntax error, expected a ; \n")
     elif lexemes[current_i] == "true":
         if switch == "1":
-            fileoutput.write("<returnPrime> ::= <Expression>\n")
-        current_i = Expression(current_i, switch)         
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+        current_i = Expression(current_i, switch) 
+        if lexemes[current_i] == ";":
+            current_i += 1
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+        else:
+            fileoutput.write("Syntax error, expected a ; \n")        
     elif lexemes[current_i] == "false":
         if switch == "1":
-            fileoutput.write("<returnPrime> ::= <Expression>\n")
-        current_i = Expression(current_i, switch)             
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+        current_i = Expression(current_i, switch)       
+        if lexemes[current_i] == ";":
+            current_i += 1
+            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+        else:
+            fileoutput.write("Syntax error, expected a ; \n")      
     else:
         if switch == "1":
-            fileoutput.write("<returnPrime> ::= <Epsilon>\n")
+            fileoutput.write("<returnPrime> ::= <Epsilon>;\n")
         Empty()
+        if lexemes[current_i] == ";":
+            current_i += 1
+            fileoutput.write("<returnPrime> ::= <Epsilon>;\n")
+        else:
+            fileoutput.write("Syntax error, expected a ; \n")  
     return current_i
 
 def Print(current_i, switch):
