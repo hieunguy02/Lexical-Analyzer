@@ -90,6 +90,7 @@ while   Keyword
 <While> ::= while ( <Condition> ) <Statement> endwhile 
 (   Separator
 <While> ::= while ( <Condition> ) <Statement> endwhile 
+<Condition> ::= <Expression> <Relop> <Expression> 
 <Expression> ::= <Term> <Expression> 
 <Term> ::= <Term> <TermPrime> 
 a   Identifier

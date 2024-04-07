@@ -466,6 +466,8 @@ def While(current_i, switch):
     return current_i
 
 def Condition(current_i, switch):
+    if switch == "1":
+        fileoutput.write("<Condition> ::= <Expression> <Relop> <Expression> \n")
     current_i = Expression(current_i, switch)
     current_i = Reloop(current_i, switch)
     current_i = Expression(current_i, switch)
