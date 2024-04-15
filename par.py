@@ -155,12 +155,13 @@ def OptDeclarationList(current_i, switch):
     return current_i
 
 def DeclarationList(current_i, switch):
+    global isFromDeclaration
+    isFromDeclaration = True
     if switch == "1":
         fileoutput.write("<DeclarationList> ::= <Declaration> <DeclarationListPrime>\n")
     current_i = Declaration(current_i, switch)
-    
     current_i = DeclarationListPrime(current_i, switch)
-    
+    isFromDeclaration = False
     return current_i
 
 def DeclarationListPrime(current_i, switch):
@@ -473,15 +474,6 @@ def Condition(current_i, switch):
     current_i = Expression(current_i, switch)
     return current_i
 
-def IDs(current_i, switch):
-    if tokens[current_i] == "Identifier":
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
-        current_i += 1
-        if switch == "1":
-            fileoutput.write("<IDs> ::= <Identifier> <IDsPrime>\n")
-        current_i = IDSPrime(current_i, switch)             
-    return current_i
-
 def IDSPrime(current_i, switch):
     if lexemes[current_i] == ",":
         current_i += 1
@@ -494,21 +486,6 @@ def IDSPrime(current_i, switch):
         Empty()
     return current_i
 
-def Qualifier(current_i, switch):
-    if lexemes[current_i] == "integer":
-        current_i += 1
-        if switch == "1":
-            fileoutput.write("<Qualifier> ::= integer \n")
-    elif lexemes[current_i] == "boolean":
-        current_i += 1
-        if switch == "1":
-            fileoutput.write("<Qualifier> ::= boolean \n")
-    elif lexemes[current_i] == "real":
-        current_i += 1
-        if switch == "1":
-            fileoutput.write("<Qualifier> ::= real \n")
-    else: fileoutput.write("Syntax error, expected a qualifier integer, boolean or real \n")     
-    return current_i
 
 def Scan(current_i, switch):
     if lexemes[current_i] == "scan":
@@ -553,7 +530,8 @@ def ReturnPrime(current_i, switch):
         current_i = Expression(current_i, switch)
         if lexemes[current_i] == ";":
             current_i += 1
-            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+            if switch == "1":
+                fileoutput.write("<returnPrime> ::= <Expression>;\n")
         else:
             fileoutput.write("Syntax error, expected a ; \n")
     elif tokens[current_i] == "Integer":
@@ -571,7 +549,8 @@ def ReturnPrime(current_i, switch):
         current_i = Expression(current_i, switch)
         if lexemes[current_i] == ";":
             current_i += 1
-            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+            if switch == "1":
+                fileoutput.write("<returnPrime> ::= <Expression>;\n")
         else:
             fileoutput.write("Syntax error, expected a ; \n")
     elif lexemes[current_i] == "(":
@@ -580,7 +559,8 @@ def ReturnPrime(current_i, switch):
         current_i = Expression(current_i, switch)
         if lexemes[current_i] == ";":
             current_i += 1
-            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+            if switch == "1":
+                fileoutput.write("<returnPrime> ::= <Expression>;\n")
         else:
             fileoutput.write("Syntax error, expected a ; \n")
     elif lexemes[current_i] == "true":
@@ -589,7 +569,8 @@ def ReturnPrime(current_i, switch):
         current_i = Expression(current_i, switch) 
         if lexemes[current_i] == ";":
             current_i += 1
-            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+            if switch == "1":
+                fileoutput.write("<returnPrime> ::= <Expression>;\n")
         else:
             fileoutput.write("Syntax error, expected a ; \n")        
     elif lexemes[current_i] == "false":
@@ -598,9 +579,11 @@ def ReturnPrime(current_i, switch):
         current_i = Expression(current_i, switch)       
         if lexemes[current_i] == ";":
             current_i += 1
-            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+            if switch == "1":
+                fileoutput.write("<returnPrime> ::= <Expression>;\n")
         else:
-            fileoutput.write("Syntax error, expected a ; \n")      
+            if switch == "1":
+                fileoutput.write("Syntax error, expected a ; \n")      
     else:
         if switch == "1":
             fileoutput.write("<returnPrime> ::= <Epsilon>;\n")
@@ -664,7 +647,6 @@ def ExpressionPrime(current_i, switch):
         current_i = ExpressionPrime(current_i, switch)   
             
     else:
-        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         if switch == "1":
             fileoutput.write("<Term Prime> ::= <Epsilon> \n")   
         Empty() 
@@ -788,7 +770,7 @@ def Reloop(current_i, switch):
         current_i += 1
         if switch == "1":
             fileoutput.write("<Relop> ::= == | != | > | < | <= | =>\n")
-        else:
+        elif switch == "1" and lexemes[current_i-1] not in relop:
             fileoutput.write("Syntax Error, expected a == or != or > or < or <= or =>\n")
     return current_i
 
@@ -799,10 +781,96 @@ def ParCheck(current_i, switch):
     current_i = RATS24(current_i, switch)
     return current_i
 
+def Qualifier(current_i, switch):
+    global current_type
+    if lexemes[current_i] == "integer":
+        current_type = "integer"
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<Qualifier> ::= integer \n")
+    elif lexemes[current_i] == "boolean":
+        current_type = "boolean"
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<Qualifier> ::= boolean \n")
+    elif lexemes[current_i] == "real":
+        current_type = "real"
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<Qualifier> ::= real \n")
+    else: fileoutput.write("Syntax error, expected a qualifier integer, boolean or real \n")     
+    return current_i
+
+
+def IDs(current_i, switch):
+    global memory_address
+    global current_type
+    if tokens[current_i] == "Identifier":
+        gen_sym(sym_idx, lexemes[current_i], current_type)
+        fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
+        current_i += 1
+        if switch == "1":
+            fileoutput.write("<IDs> ::= <Identifier> <IDsPrime>\n")
+        current_i = IDSPrime(current_i, switch)             
+    return current_i
+
+sym_idx = 0
+memory_address = 10000
+prevlexeme = ""
+instr_idx = 1
+sym_table = []
+instuction_table = []
+jumpstack = []
+save = ""
+current_type = ""
+isFromDeclaration = False
+#sym_table[sym_idx] has [lexeme, memory adress, type]
+#instruction_table[instr_idx] has [address, op, operand]
+        
+def gen_sym(sym_idx, lexeme, id_type):
+    global isFromDeclaration
+    if ((lexeme and id_type) not in sym_table) and isFromDeclaration == True:
+        sym_table.append([lexeme, memory_address, id_type])
+        inc_mem_address()
+        sym_idx += 1
+        return sym_idx
+
+def inc_mem_address():
+    global memory_address
+    memory_address += 1
+
+def printSym(sym_table):
+    i = 0
+    fileoutput.write(" \n Symbol Table \n") 
+    for lists in sym_table:
+        for element in lists:
+            fileoutput.write(str(element) + "\t")
+        fileoutput.write("\n")   
+            
+def gen_instruction(instr_idx, op, operand):
+    instuction_table.append([instr_idx, op, operand])
+    instr_idx += 1
+    return instr_idx
+        
+def peek(stack):
+    if stack:
+        return stack[-1]
+    else:
+        return None
+
+def back_patch(instr_idx):
+    address = peek(jumpstack)
+    jumpstack.pop()
+    instuction_table[address][2] = instr_idx
+    return instuction_table[address][2]
+
+
+    
 try:
     lexer(file_name)
     switch = input("Enter 0 (Turn off syntax) or 1 (Turn on syntax): ")
     current_i = ParCheck(0, switch)
+    printSym(sym_table)
 
 
 except OSError:
