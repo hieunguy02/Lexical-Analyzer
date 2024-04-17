@@ -16,7 +16,6 @@ fahr   Identifier
 32   Integer
 /   Operator
 9   Integer
-<returnPrime> ::= <Expression>;
 }   Separator
 $   Separator
 integer   Keyword
@@ -47,9 +46,9 @@ low   Identifier
 )   Separator
 )   Separator
 ;   Separator
-c   Identifier
+low   Identifier
 =   Operator
-a   Identifier
+low   Identifier
 +   Operator
 true   Keyword
 ;   Separator
@@ -69,3 +68,6 @@ fahr	10000	integer
 low	10001	integer	
 high	10002	integer	
 step	10003	integer	
+ 
+ Instruction Table 
+1	POPM	None	

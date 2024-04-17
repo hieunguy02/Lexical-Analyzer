@@ -358,7 +358,10 @@ def Compound(current_i, switch):
     return current_i
 
 def Assign(current_i, switch):
+    global save
+    global instr_idx
     if tokens[current_i] == "Identifier":
+        save = lexemes[current_i]
         fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
         current_i += 1
         if switch == "1":
@@ -369,8 +372,8 @@ def Assign(current_i, switch):
             current_i += 1
             if switch == "1":
                 fileoutput.write(" <Assign> ::= <Identifier> = <Expression> ;\n")
-                
             current_i = Expression(current_i, switch)
+            gen_instruction(instr_idx, "POPM", get_address(save))
             
             if lexemes[current_i] == ";":
                 fileoutput.write(str(lexemes[current_i]) + "   " + str(tokens[current_i]) + "\n")
@@ -826,6 +829,7 @@ jumpstack = []
 save = ""
 current_type = ""
 isFromDeclaration = False
+address = 0
 #sym_table[sym_idx] has [lexeme, memory adress, type]
 #instruction_table[instr_idx] has [address, op, operand]
         
@@ -842,7 +846,6 @@ def inc_mem_address():
     memory_address += 1
 
 def printSym(sym_table):
-    i = 0
     fileoutput.write(" \n Symbol Table \n") 
     for lists in sym_table:
         for element in lists:
@@ -853,6 +856,24 @@ def gen_instruction(instr_idx, op, operand):
     instuction_table.append([instr_idx, op, operand])
     instr_idx += 1
     return instr_idx
+
+def get_address(save):
+    global sym_idx
+    global address
+    for i in range(sym_idx):  
+        if sym_table[i][0] == save:  
+            address = sym_table[i][1]  
+            break  
+    
+
+def print_instruction(instuction_table):
+    i = 0
+    global sym_idx
+    fileoutput.write(" \n Instruction Table \n")
+    for lists in instuction_table:
+        for element in lists:
+            fileoutput.write(str(element) + "\t")
+        fileoutput.write("\n")   
         
 def peek(stack):
     if stack:
@@ -866,13 +887,19 @@ def back_patch(instr_idx):
     instuction_table[address][2] = instr_idx
     return instuction_table[address][2]
 
-
     
 try:
     lexer(file_name)
     switch = input("Enter 0 (Turn off syntax) or 1 (Turn on syntax): ")
     current_i = ParCheck(0, switch)
     printSym(sym_table)
+    print_instruction(instuction_table)
+    print(save)
+    print(address)
+    print(sym_table[0][0])
+    print(sym_table[1][0])
+    print(sym_table[2][0])
+    print(sym_table[3][0])
 
 
 except OSError:
