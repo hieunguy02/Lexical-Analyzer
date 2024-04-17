@@ -858,12 +858,14 @@ def gen_instruction(instr_idx, op, operand):
     return instr_idx
 
 def get_address(save):
-    global sym_idx
     global address
-    for i in range(sym_idx):  
-        if sym_table[i][0] == save:  
-            address = sym_table[i][1]  
-            break  
+    for entry in sym_table:
+        if entry[0] == save:
+            address = entry[1]
+            break
+    getaddress = address
+    return getaddress
+
     
 
 def print_instruction(instuction_table):
@@ -894,12 +896,7 @@ try:
     current_i = ParCheck(0, switch)
     printSym(sym_table)
     print_instruction(instuction_table)
-    print(save)
-    print(address)
-    print(sym_table[0][0])
-    print(sym_table[1][0])
-    print(sym_table[2][0])
-    print(sym_table[3][0])
+
 
 
 except OSError:
