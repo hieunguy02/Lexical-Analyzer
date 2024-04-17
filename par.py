@@ -540,7 +540,8 @@ def ReturnPrime(current_i, switch):
         current_i = Expression(current_i, switch) 
         if lexemes[current_i] == ";":
             current_i += 1
-            fileoutput.write("<returnPrime> ::= <Expression>;\n")
+            if switch == "1":
+                fileoutput.write("<returnPrime> ::= <Expression>;\n")
         else:
             fileoutput.write("Syntax error, expected a ; \n")
     elif tokens[current_i] == "Real":
@@ -590,7 +591,8 @@ def ReturnPrime(current_i, switch):
         Empty()
         if lexemes[current_i] == ";":
             current_i += 1
-            fileoutput.write("<returnPrime> ::= <Epsilon>;\n")
+            if switch == "1":
+                fileoutput.write("<returnPrime> ::= <Epsilon>;\n")
         else:
             fileoutput.write("Syntax error, expected a ; \n")  
     return current_i
