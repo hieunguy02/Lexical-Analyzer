@@ -63,11 +63,11 @@ step   Identifier
 ;   Separator
 $   Separator
  
+ Instruction Table 
+1	POPM	10001	
+ 
  Symbol Table 
 fahr	10000	integer	
 low	10001	integer	
 high	10002	integer	
 step	10003	integer	
- 
- Instruction Table 
-1	POPM	10001	

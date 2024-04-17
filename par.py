@@ -894,8 +894,9 @@ try:
     lexer(file_name)
     switch = input("Enter 0 (Turn off syntax) or 1 (Turn on syntax): ")
     current_i = ParCheck(0, switch)
-    printSym(sym_table)
+    
     print_instruction(instuction_table)
+    printSym(sym_table)
 
 
 
