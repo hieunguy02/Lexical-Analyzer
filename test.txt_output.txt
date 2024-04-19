@@ -54,6 +54,21 @@ true   Keyword
 ;   Separator
 }   Separator
 endwhile   Keyword
+if   Keyword
+(   Separator
+a   Identifier
+>   Operator
+b   Identifier
+)   Separator
+{   Separator
+low   Identifier
+=   Operator
+low   Identifier
++   Operator
+true   Keyword
+;   Separator
+}   Separator
+endif   Keyword
 scan   Keyword
 (   Separator
 low   Identifier
@@ -64,6 +79,7 @@ step   Identifier
 $   Separator
  
  Instruction Table 
+1	POPM	10001	
 1	POPM	10001	
  
  Symbol Table 

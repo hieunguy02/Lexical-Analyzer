@@ -16,6 +16,12 @@ while ( a < b )
  } 
 endwhile 
 
+if ( a > b) 
+{
+    low = low + true ;
+}
+endif 
+
 scan (low, high, step);
 
 $ 
